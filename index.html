@@ -593,7 +593,7 @@
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
         // --- Auto-load blog posts from /blogs ---
-        // Each post lists itself in blogs/manifest.json, and embeds a
+        // Each post lists itself in blog/manifest.json, and embeds a
         // <script type="application/json" id="post-meta"> block with its
         // card details. We fetch that block and render a matching card
         // here automatically, so new posts only need to be added to the
@@ -601,7 +601,7 @@
         async function loadBlogPosts() {
             const grid = document.getElementById('article-grid');
             try {
-                const manifestRes = await fetch('blogs/manifest.json');
+                const manifestRes = await fetch('blog/manifest.json');
                 if (!manifestRes.ok) {
                     console.error('manifest.json fetch failed:', manifestRes.status);
                     return;
@@ -610,7 +610,7 @@
 
                 for (const file of files) {
                     try {
-                        const postRes = await fetch(`blogs/${file}`);
+                        const postRes = await fetch(`blog/${file}`);
                         if (!postRes.ok) {
                             console.error(`${file} fetch failed:`, postRes.status);
                             continue;
@@ -629,7 +629,7 @@
                         const article = document.createElement('article');
                         article.className = 'article-card';
                         article.addEventListener('click', () => {
-                            window.location.href = meta.url || `blogs/${file}`;
+                            window.location.href = meta.url || `blog/${file}`;
                         });
 
                         article.innerHTML = `
