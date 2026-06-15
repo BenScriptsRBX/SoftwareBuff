@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftwareBuff | Discover Better Software</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Reset & Variables */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #fafafc;
+            --bg-color-2: #f1f0f8;
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --card-bg-hover: rgba(255, 255, 255, 0.9);
+            --accent-color: #4f46e5; /* Sleek modern indigo-blue */
+            --accent-glow: rgba(79, 70, 229, 0.10);
+            --accent-glow-2: rgba(99, 102, 241, 0.08);
+            --text-main: #1f2230;
+            --text-muted: #6b7280;
+            --radius-lg: 16px;
+            --radius-sm: 12px;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Geist', sans-serif;
+            /* Single continuous background across the whole page so no
+               section boundary is visible. Subtle moving glows live on
+               a fixed layer behind everything. */
+            background: linear-gradient(180deg, var(--bg-color) 0%, var(--bg-color-2) 45%, var(--bg-color) 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ambient background layer: fixed so glows drift across section
+           boundaries seamlessly instead of being tied to one section */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-layer::before,
+        .bg-layer::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.7;
+        }
+
+        .bg-layer::before {
+            width: 700px;
+            height: 700px;
+            top: -15%;
+            left: 50%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            animation: drift1 28s ease-in-out infinite alternate;
+        }
+
+        .bg-layer::after {
+            width: 600px;
+            height: 600px;
+            top: 55%;
+            left: 10%;
+            background: radial-gradient(circle, var(--accent-glow-2) 0%, transparent 70%);
+            animation: drift2 34s ease-in-out infinite alternate;
+        }
+
+        @keyframes drift1 {
+            0%   { transform: translate(-50%, 0) scale(1); }
+            50%  { transform: translate(-40%, 6%) scale(1.15); }
+            100% { transform: translate(-58%, -4%) scale(0.95); }
+        }
+
+        @keyframes drift2 {
+            0%   { transform: translate(0, 0) scale(1); }
+            50%  { transform: translate(8%, -8%) scale(1.2); }
+            100% { transform: translate(-5%, 5%) scale(0.9); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(3deg); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+            50% { box-shadow: 0 0 0 6px transparent; }
+        }
+
+        /* Scroll reveal helper */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header Navigation */
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(15, 16, 30, 0.06);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-main);
+            transition: var(--transition-smooth);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+            background: linear-gradient(90deg, var(--accent-color), #818cf8, var(--accent-color));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 6s linear infinite;
+        }
+
+        .nav-links a {
+            position: relative;
+            color: var(--text-muted);
+            margin-left: 2rem;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0%;
+            height: 1px;
+            background: var(--accent-color);
+            transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-main);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 6rem 0 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+            line-height: 1.15;
+            opacity: 0;
+            animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        /* Sections - no background of their own, blends with body gradient */
+        section {
+            padding: 5rem 0;
+        }
+
+        section h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 3rem;
+            letter-spacing: -0.03em;
+            position: relative;
+            display: inline-block;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* Articles / Blogs Grid Layout */
+        .grid-articles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .article-card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(15, 16, 30, 0.06);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(79, 70, 229, 0.35);
+            box-shadow: 0 24px 48px rgba(31, 34, 48, 0.10), 0 0 32px var(--accent-glow);
+            background-color: var(--card-bg-hover);
+        }
+
+        /* Graphic/Visual spacer to substitute regular images cleanly */
+        .article-visual {
+            height: 180px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.0) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border-bottom: 1px solid rgba(15, 16, 30, 0.04);
+            transition: var(--transition-smooth);
+        }
+
+        .article-card:hover .article-visual {
+            background: linear-gradient(135deg, rgba(79,70,229,0.10) 0%, rgba(255,255,255,0.0) 100%);
+        }
+
+        .article-card:hover .article-visual span {
+            animation: floatIcon 1.6s ease-in-out infinite;
+        }
+
+        .article-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .article-meta .date {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .article-content h3 {
+            font-size: 1.35rem;
+            color: var(--text-main);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .article-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-link {
+            margin-top: auto;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition-smooth);
+        }
+
+        .article-link span.arrow {
+            display: inline-block;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .article-card:hover .article-link {
+            color: var(--accent-color);
+        }
+
+        .article-card:hover .article-link span.arrow {
+            transform: translateX(6px);
+        }
+
+        /* What You'll Find Section */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(15, 16, 30, 0.06);
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            transition: var(--transition-smooth);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(79, 70, 229, 0.3);
+            background-color: var(--card-bg-hover);
+            box-shadow: 0 16px 36px rgba(31, 34, 48, 0.08);
+        }
+
+        .card-icon {
+            font-size: 1.25rem;
+            margin-bottom: 1.25rem;
+            display: inline-block;
+            transition: var(--transition-smooth);
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.15) rotate(-6deg);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        /* Minimal Categories Grid */
+        .grid-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .category-card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(15, 16, 30, 0.06);
+            padding: 1.5rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            background-color: #fff;
+            color: #000;
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 28px var(--accent-glow);
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid rgba(15, 16, 30, 0.06);
+            margin-top: 4rem;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-main);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.75rem;
+            }
+            .header-inner, .footer-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .nav-links a {
+                margin: 0 1rem;
+            }
+            .footer-links a {
+                margin: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-layer"></div>
+
+    <header>
+        <div class="container header-inner">
+            <div class="logo">Software<span>Buff</span></div>
+            <nav class="nav-links">
+                <a href="#" class="active">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Discover Better Software</h1>
+            <p>Find the best software tools for productivity, development, creativity, and everyday use without sorting through endless noise.</p>
+        </div>
+    </section>
+
+    <section id="reviews">
+        <div class="container">
+            <h2 class="reveal">Latest Tool Reviews</h2>
+            <div class="grid-articles" id="article-grid">
+
+                <article class="article-card reveal">
+                    <div class="article-visual"><span>📝</span></div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="category">Productivity</span>
+                            <span class="date">June 14, 2026</span>
+                        </div>
+                        <h3>Obsidian: The Power of Local-First Markdown Notes</h3>
+                        <p>An in-depth look at how Obsidian organizes thoughts through interconnected links while keeping your personal data completely offline and secure.</p>
+                        <span class="article-link">Read review <span class="arrow">&rarr;</span></span>
+                    </div>
+                </article>
+
+                <article class="article-card reveal">
+                    <div class="article-visual"><span>⚡</span></div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="category">Developer Tools</span>
+                            <span class="date">June 10, 2026</span>
+                        </div>
+                        <h3>Why Warp is Replacing the Traditional Terminal</h3>
+                        <p>Evaluating the modern, AI-integrated terminal built in Rust. We test its speed, command search features, and security practices.</p>
+                        <span class="article-link">Read review <span class="arrow">&rarr;</span></span>
+                    </div>
+                </article>
+
+                <article class="article-card reveal">
+                    <div class="article-visual"><span>🎨</span></div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span class="category">Design</span>
+                            <span class="date">May 28, 2026</span>
+                        </div>
+                        <h3>Penpot: The Open-Source Figma Alternative</h3>
+                        <p>Can a web-based, open-source design tool genuinely compete with industry giants? We analyze its performance, layout engine, and privacy model.</p>
+                        <span class="article-link">Read review <span class="arrow">&rarr;</span></span>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <h2 class="reveal">What You'll Find</h2>
+            <div class="grid-3">
+                <div class="card reveal">
+                    <div class="card-icon">🔍</div>
+                    <h3>Software Reviews</h3>
+                    <p>Short, practical reviews that focus on what matters most to your workflow.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="card-icon">🛡️</div>
+                    <h3>Safe Downloads</h3>
+                    <p>Verified, virus-free links pointing directly to official and trusted ecosystem sources.</p>
+                </div>
+                <div class="card reveal">
+                    <div class="card-icon">⚡</div>
+                    <h3>Quick Recommendations</h3>
+                    <p>Find the exact right tool tailored for your project without spending hours researching.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="reveal">About SoftwareBuff</h2>
+            <div class="about-content">
+                <p class="reveal">SoftwareBuff is a software discovery platform dedicated to helping users find useful applications quickly. Instead of overwhelming lists and lengthy articles, we focus on straightforward recommendations and trusted download sources.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-logo">&copy; 2026 SoftwareBuff. All rights reserved.</div>
+                <div class="footer-links">
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = (i % 6) * 0.08 + 's';
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- Auto-load blog posts from /blogs ---
+        // Each post lists itself in blogs/manifest.json, and embeds a
+        // <script type="application/json" id="post-meta"> block with its
+        // card details. We fetch that block and render a matching card
+        // here automatically, so new posts only need to be added to the
+        // manifest, no editing of index.html required.
+        async function loadBlogPosts() {
+            const grid = document.getElementById('article-grid');
+            try {
+                const manifestRes = await fetch('blogs/manifest.json');
+                if (!manifestRes.ok) return;
+                const files = await manifestRes.json();
+
+                for (const file of files) {
+                    try {
+                        const postRes = await fetch(`blogs/${file}`);
+                        if (!postRes.ok) continue;
+                        const html = await postRes.text();
+
+                        const doc = new DOMParser().parseFromString(html, 'text/html');
+                        const metaScript = doc.getElementById('post-meta');
+                        if (!metaScript) continue;
+
+                        const meta = JSON.parse(metaScript.textContent);
+
+                        const article = document.createElement('article');
+                        article.className = 'article-card reveal';
+                        article.addEventListener('click', () => {
+                            window.location.href = meta.url || `blogs/${file}`;
+                        });
+
+                        article.innerHTML = `
+                            <div class="article-visual"><span>${meta.icon || '📄'}</span></div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span class="category">${meta.category || ''}</span>
+                                    <span class="date">${meta.date || ''}</span>
+                                </div>
+                                <h3>${meta.title || file}</h3>
+                                <p>${meta.excerpt || ''}</p>
+                                <span class="article-link">Read review <span class="arrow">&rarr;</span></span>
+                            </div>
+                        `;
+
+                        grid.appendChild(article);
+                        observer.observe(article);
+                    } catch (e) {
+                        console.error(`Failed to load blog post ${file}:`, e);
+                    }
+                }
+            } catch (e) {
+                // manifest.json missing or fetch blocked (e.g. opening
+                // index.html via file:// in some browsers) - fail silently,
+                // static cards above still render.
+                console.error('Failed to load blog manifest:', e);
+            }
+        }
+
+        loadBlogPosts();
+    </script>
+
+</body>
+</html>
