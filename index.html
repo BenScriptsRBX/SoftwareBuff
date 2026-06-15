@@ -602,23 +602,32 @@
             const grid = document.getElementById('article-grid');
             try {
                 const manifestRes = await fetch('blogs/manifest.json');
-                if (!manifestRes.ok) return;
+                if (!manifestRes.ok) {
+                    console.error('manifest.json fetch failed:', manifestRes.status);
+                    return;
+                }
                 const files = await manifestRes.json();
 
                 for (const file of files) {
                     try {
                         const postRes = await fetch(`blogs/${file}`);
-                        if (!postRes.ok) continue;
+                        if (!postRes.ok) {
+                            console.error(`${file} fetch failed:`, postRes.status);
+                            continue;
+                        }
                         const html = await postRes.text();
 
                         const doc = new DOMParser().parseFromString(html, 'text/html');
                         const metaScript = doc.getElementById('post-meta');
-                        if (!metaScript) continue;
+                        if (!metaScript) {
+                            console.error(`${file}: no #post-meta script found`);
+                            continue;
+                        }
 
                         const meta = JSON.parse(metaScript.textContent);
 
                         const article = document.createElement('article');
-                        article.className = 'article-card reveal';
+                        article.className = 'article-card';
                         article.addEventListener('click', () => {
                             window.location.href = meta.url || `blogs/${file}`;
                         });
@@ -637,7 +646,6 @@
                         `;
 
                         grid.appendChild(article);
-                        observer.observe(article);
                     } catch (e) {
                         console.error(`Failed to load blog post ${file}:`, e);
                     }
