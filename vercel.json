@@ -1,0 +1,10 @@
+{
+  "headers": [
+    {
+      "source": "/blogs/manifest.json",
+      "headers": [
+        { "key": "Content-Type", "value": "application/json" }
+      ]
+    }
+  ]
+}
