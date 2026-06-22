@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Free Streaming Software in 2026 | SoftwareBuff</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/json" id="post-meta">
+    {
+        "title": "Best Free Streaming Software in 2026: OBS Studio",
+        "category": "Content Creation",
+        "date": "June 22, 2026",
+        "icon": "🎬",
+        "excerpt": "Looking for the best free streaming and recording software? OBS Studio captures, mixes, and broadcasts your content with no fees, no watermarks, and no limits — here's what it can do.",
+        "url": "blog/best-free-streaming-software.html"
+    }
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #fafafc;
+            --bg-color-2: #f1f0f8;
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --card-bg-hover: rgba(255, 255, 255, 0.9);
+            --accent-color: #4f46e5;
+            --accent-glow: rgba(79, 70, 229, 0.10);
+            --accent-glow-2: rgba(99, 102, 241, 0.08);
+            --text-main: #1f2230;
+            --text-muted: #6b7280;
+            --radius-lg: 16px;
+            --radius-sm: 12px;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Geist', sans-serif;
+            background: linear-gradient(180deg, var(--bg-color) 0%, var(--bg-color-2) 45%, var(--bg-color) 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-layer::before,
+        .bg-layer::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.7;
+        }
+
+        .bg-layer::before {
+            width: 700px;
+            height: 700px;
+            top: -15%;
+            left: 50%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            animation: drift1 28s ease-in-out infinite alternate;
+        }
+
+        .bg-layer::after {
+            width: 600px;
+            height: 600px;
+            top: 55%;
+            left: 10%;
+            background: radial-gradient(circle, var(--accent-glow-2) 0%, transparent 70%);
+            animation: drift2 34s ease-in-out infinite alternate;
+        }
+
+        @keyframes drift1 {
+            0%   { transform: translate(-50%, 0) scale(1); }
+            50%  { transform: translate(-40%, 6%) scale(1.15); }
+            100% { transform: translate(-58%, -4%) scale(0.95); }
+        }
+
+        @keyframes drift2 {
+            0%   { transform: translate(0, 0) scale(1); }
+            50%  { transform: translate(8%, -8%) scale(1.2); }
+            100% { transform: translate(-5%, 5%) scale(0.9); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(15, 16, 30, 0.06);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-main);
+        }
+
+        .logo span {
+            background: linear-gradient(90deg, var(--accent-color), #818cf8, var(--accent-color));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 6s linear infinite;
+        }
+
+        .back-link {
+            position: relative;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition-smooth);
+        }
+
+        .back-link:hover { color: var(--accent-color); }
+
+        .back-link span.arrow {
+            display: inline-block;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .back-link:hover span.arrow { transform: translateX(-6px); }
+
+        /* Hero */
+        .post-hero { padding: 5rem 0 3rem 0; }
+
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards;
+        }
+
+        .post-meta .date {
+            color: var(--text-muted);
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .post-hero h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+        }
+
+        .post-hero .excerpt {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            max-width: 640px;
+            opacity: 0;
+            animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        .post-visual {
+            margin-top: 2.5rem;
+            height: 220px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, rgba(79,70,229,0.08) 0%, rgba(255,255,255,0.0) 100%);
+            border: 1px solid rgba(15, 16, 30, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            opacity: 0;
+            animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+
+        /* Article body */
+        article { padding: 2rem 0 5rem 0; }
+
+        article h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 2.5rem 0 1rem 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        article h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 36px;
+            height: 2px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        article p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            font-weight: 300;
+            margin-bottom: 1.25rem;
+        }
+
+        article ul {
+            margin: 0 0 1.25rem 1.25rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+
+        article li { margin-bottom: 0.5rem; }
+
+        article strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Tool cards */
+        .tool-card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(15, 16, 30, 0.06);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem 2rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition-smooth);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(79, 70, 229, 0.3);
+            background-color: var(--card-bg-hover);
+            box-shadow: 0 16px 36px rgba(31, 34, 48, 0.08);
+        }
+
+        .tool-card h3 {
+            font-size: 1.2rem;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .tool-card .tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-color);
+            font-weight: 600;
+            background: var(--accent-glow);
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+        }
+
+        .tool-card p { margin-bottom: 0; }
+
+        /* Download CTA */
+        .download-cta {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(15, 16, 30, 0.06);
+            border-radius: var(--radius-lg);
+            padding: 2rem 2.25rem;
+            margin: 2rem 0 2.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            transition: var(--transition-smooth);
+        }
+
+        .download-cta:hover {
+            border-color: rgba(79, 70, 229, 0.3);
+            box-shadow: 0 16px 36px rgba(31, 34, 48, 0.08);
+        }
+
+        .download-cta-text h3 {
+            font-size: 1.15rem;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.35rem;
+        }
+
+        .download-cta-text p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--accent-color);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.85rem 1.6rem;
+            border-radius: 999px;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: var(--transition-smooth);
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px var(--accent-glow);
+            filter: brightness(1.08);
+        }
+
+        .btn-download span.arrow {
+            display: inline-block;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-download:hover span.arrow { transform: translateY(2px); }
+
+        /* Spec grid */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .spec-item {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(15, 16, 30, 0.06);
+            border-radius: var(--radius-sm);
+            padding: 1.1rem 1.25rem;
+            transition: var(--transition-smooth);
+        }
+
+        .spec-item:hover {
+            border-color: rgba(79, 70, 229, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .spec-item .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+
+        .spec-item .value {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid rgba(15, 16, 30, 0.06);
+            margin-top: 2rem;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-logo {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover { color: var(--text-main); }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .post-hero h1 { font-size: 2rem; }
+            .header-inner, .footer-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .footer-links a { margin: 0 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-layer"></div>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">Software<span>Buff</span></div>
+            <a href="../index.html" class="back-link"><span class="arrow">&larr;</span> Back to home</a>
+        </div>
+    </header>
+
+    <section class="post-hero">
+        <div class="container">
+            <div class="post-meta">
+                <span class="category">Content Creation</span>
+                <span class="date">June 22, 2026</span>
+            </div>
+            <h1>Best Free Streaming Software in 2026: OBS Studio</h1>
+            <p class="excerpt">Looking for the best free streaming and recording software? OBS Studio captures, mixes, and broadcasts your content with no fees, no watermarks, and no limits — here's what it can do.</p>
+            <div class="post-visual">🎬</div>
+        </div>
+    </section>
+
+    <article>
+        <div class="container">
+            <p class="reveal">Streaming software tends to split into two camps: paid suites that charge a monthly fee for features you barely use, or "free" tools that slap a watermark on your recordings the moment you hit record. OBS Studio sits in a category of its own — a fully open-source broadcaster trusted by millions of creators, gamers, and professionals worldwide, with no fees, no watermarks, and no viewer caps. Available on Windows, macOS, and Linux, it's the industry standard for a reason.</p>
+
+            <div class="download-cta reveal">
+                <div class="download-cta-text">
+                    <h3>Download OBS Studio — Free</h3>
+                    <p>No subscription. No watermarks. No limits.</p>
+                </div>
+                <a href="https://obsproject.com/download" class="btn-download" target="_blank" rel="noopener">
+                    Get OBS Studio <span class="arrow">&darr;</span>
+                </a>
+            </div>
+
+            <h2 class="reveal">At a Glance</h2>
+            <div class="spec-grid reveal">
+                <div class="spec-item">
+                    <div class="label">Price</div>
+                    <div class="value">Free &amp; Open Source</div>
+                </div>
+                <div class="spec-item">
+                    <div class="label">Platform</div>
+                    <div class="value">Windows, macOS, Linux</div>
+                </div>
+                <div class="spec-item">
+                    <div class="label">Version</div>
+                    <div class="value">32.1.2 (April 2026)</div>
+                </div>
+                <div class="spec-item">
+                    <div class="label">Watermarks</div>
+                    <div class="value">None</div>
+                </div>
+            </div>
+
+            <h2 class="reveal">Why OBS Studio Is the Best Free Pick</h2>
+            <p class="reveal">Most free streaming tools are either stripped-down trials or forks that add bloat and overhead. OBS Studio gives you everything — scene composition, multi-source mixing, hardware-accelerated encoding, and live broadcasting to any platform — without charging a cent or limiting what you can do. The latest version (32.1.2) ships a rebuilt audio mixer, WebRTC Simulcast support, and a crash-resistant recording format that finally puts the corrupted-MP4 problem behind us.</p>
+
+            <h2 class="reveal">Key Features</h2>
+            <ul class="reveal">
+                <li><strong>Scenes and sources</strong> — build an unlimited number of scenes from any combination of inputs: game capture, display capture, webcam, browser windows, images, text overlays, and capture cards. Switch between scenes instantly using custom transitions.</li>
+                <li><strong>Rebuilt audio mixer (v32.1)</strong> — the audio mixer was rewritten from the ground up in the latest release, adding quick access to audio monitoring, pinnable sources, per-source filters (noise gate, noise suppression, gain), and full VST plugin support for professional-grade audio control.</li>
+                <li><strong>Hardware-accelerated encoding</strong> — use NVENC on NVIDIA GPUs, AMF on AMD, or QuickSync on Intel to offload encoding from your CPU entirely. NVENC on RTX hardware can cut CPU usage by up to 70%, freeing resources for smooth gameplay alongside streaming.</li>
+                <li><strong>WebRTC and multi-protocol support</strong> — stream via RTMP to Twitch, YouTube, Kick, or any custom destination, or use the new WebRTC Simulcast support for sub-second latency interactive broadcasts via WHIP endpoints.</li>
+                <li><strong>Studio Mode</strong> — preview your next scene before pushing it live, so your viewers never see a half-built layout or an accidental transition.</li>
+                <li><strong>Multiview</strong> — monitor up to eight scenes simultaneously and cue transitions with a single click, useful for more complex productions with multiple camera angles.</li>
+                <li><strong>Hotkeys</strong> — assign keyboard shortcuts to almost any action: switching scenes, muting sources, starting or stopping a stream or recording, push-to-talk, and more.</li>
+                <li><strong>Plugin ecosystem</strong> — a built-in Plugin Manager (added in v32.0) makes it easy to discover, install, and manage thousands of community plugins that extend OBS with additional overlays, integrations, effects, and automation.</li>
+                <li><strong>Cross-platform</strong> — runs on Windows 10/11, macOS 12 and later (including Apple Silicon with a native Metal renderer), and Linux via PPA and Flatpak.</li>
+            </ul>
+
+            <h2 class="reveal">How to Get Started</h2>
+            <p class="reveal">OBS has a reputation for complexity, but the basics come together quickly:</p>
+            <ul class="reveal">
+                <li>Download and run the installer from obsproject.com, then let the Auto-Configuration Wizard run — it benchmarks your system and sets a sensible starting point for resolution, bitrate, and encoder.</li>
+                <li>Add your first scene and click the + button under Sources to add your game capture, display capture, or webcam as a source.</li>
+                <li>Open Settings → Stream, choose your platform (Twitch, YouTube, etc.), paste in your stream key, and you're ready to go live.</li>
+                <li>For recording only, switch the output mode to Recording in Settings → Output and pick a folder for your files.</li>
+                <li>Use Studio Mode (top-right button) once you're comfortable with the basics, so you can line up scene changes before pushing them live.</li>
+            </ul>
+
+            <h2 class="reveal">Who It's For</h2>
+            <p class="reveal">OBS Studio is the right pick for gamers, educators, podcasters, and professionals who want full control over their broadcasts without paying for it. Streamers who've outgrown simpler tools like Twitch Studio will find the plugin ecosystem and encoder options give them the headroom to grow. The one group it doesn't serve well is absolute beginners who need to record something in the next five minutes with zero configuration — the interface rewards the time you put into learning it, but that time isn't zero.</p>
+            <p class="reveal">If you need post-production editing built in, OBS won't do that — it's a broadcaster and recorder, not a video editor. For that you'll need a separate tool like DaVinci Resolve (also free). But for capturing and going live, there's nothing else in the free tier that comes close.</p>
+
+            <h2 class="reveal">A Note on Performance</h2>
+            <p class="reveal">OBS is efficiently built and runs well on most modern hardware, but the combination of streaming, encoding, and gameplay does put demands on your system. If you have an NVIDIA RTX GPU, switch to NVENC in Settings → Output immediately — hardware encoding is the single biggest performance improvement you can make, and the quality at equivalent bitrates is excellent. For 1080p60 streaming, a bitrate of 4,500–6,000 kbps with a 2-second keyframe interval is the right starting point for most platforms.</p>
+        </div>
+    </article>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-logo">&copy; 2026 SoftwareBuff. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="../index.html">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = (i % 6) * 0.08 + 's';
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
